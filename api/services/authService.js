@@ -1,4 +1,3 @@
-cat > api/services/authService.js << 'EOF'
 import AppError from "../errors/AppError.js";
 import { generateAccessToken, generateRefreshToken } from "./tokenService.js";
 
