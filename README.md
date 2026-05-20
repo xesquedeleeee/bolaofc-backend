@@ -8,7 +8,7 @@ API REST desenvolvida com Express, PostgreSQL, NeonDB e deploy na Vercel.
 |---|---|
 | Brenno Henrique | 855276 |
 | Alexis Gonçalves | 855357 |
-| Levi Victor | 855503 |
+| Levi Vitor | 855503 |
 | Luan Bandeira | 855241 |
 
 ## 🚀 Tecnologias
