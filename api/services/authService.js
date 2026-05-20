@@ -69,4 +69,3 @@ export const logout = async (token, models) => {
     throw new AppError("Refresh token não encontrado.", 404);
   }
 };
-EOF
