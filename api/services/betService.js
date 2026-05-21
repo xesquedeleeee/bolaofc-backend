@@ -64,6 +64,15 @@ export const update = async (id, data, userId, models) => {
   const bet = await models.Bet.findOne({ where: { id, userId } });
   if (!bet) throw new AppError("Palpite não encontrado ou sem permissão.", 404);
   const match = await models.Match.findByPk(bet.matchId);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const matchDay = new Date(match.matchDate);
+  matchDay.setHours(0, 0, 0, 0);
+  if (matchDay < today) {
+    throw new AppError("Não é possível editar palpite de uma partida já realizada.", 400);
+  }
+
   const points = calcPoints(
     data.predictedHome,
     data.predictedAway,
