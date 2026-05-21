@@ -16,7 +16,7 @@ const getById = async (req, res, next) => {
       req.params.id,
       req.context.models
     );
-    if (!championship) throw new AppError("Campeonato não encontrado.", 404);
+    if (!championship) throw new AppError("Liga não encontrada.", 404);
     return res.json(championship);
   } catch (err) {
     next(err);
@@ -47,7 +47,7 @@ const update = async (req, res, next) => {
       req.userId,
       req.context.models
     );
-    if (!championship) throw new AppError("Campeonato não encontrado.", 404);
+    if (!championship) throw new AppError("Liga não encontrada.", 404);
     return res.json(championship);
   } catch (err) {
     next(err);
@@ -61,8 +61,8 @@ const remove = async (req, res, next) => {
       req.userId,
       req.context.models
     );
-    if (!deleted) throw new AppError("Campeonato não encontrado.", 404);
-    return res.json({ message: "Campeonato removido com sucesso." });
+    if (!deleted) throw new AppError("Liga não encontrada.", 404);
+    return res.json({ message: "Liga removida com sucesso." });
   } catch (err) {
     next(err);
   }
@@ -74,11 +74,72 @@ const getMatches = async (req, res, next) => {
       req.params.id,
       req.context.models
     );
-    if (!matches) throw new AppError("Campeonato não encontrado.", 404);
+    if (!matches) throw new AppError("Liga não encontrada.", 404);
     return res.json(matches);
   } catch (err) {
     next(err);
   }
 };
 
-export default { getAll, getById, create, update, remove, getMatches };
+const join = async (req, res, next) => {
+  try {
+    const member = await ChampionshipService.join(
+      req.params.id,
+      req.userId,
+      req.context.models
+    );
+    return res.status(201).json({ message: "Você entrou na liga!", member });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const leave = async (req, res, next) => {
+  try {
+    await ChampionshipService.leave(
+      req.params.id,
+      req.userId,
+      req.context.models
+    );
+    return res.json({ message: "Você saiu da liga." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getMembers = async (req, res, next) => {
+  try {
+    const members = await ChampionshipService.getMembers(
+      req.params.id,
+      req.context.models
+    );
+    return res.json(members);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getUserLeagues = async (req, res, next) => {
+  try {
+    const leagues = await ChampionshipService.getUserLeagues(
+      req.userId,
+      req.context.models
+    );
+    return res.json(leagues);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default {
+  getAll,
+  getById,
+  create,
+  update,
+  remove,
+  getMatches,
+  join,
+  leave,
+  getMembers,
+  getUserLeagues,
+};

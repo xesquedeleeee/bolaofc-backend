@@ -6,6 +6,7 @@ import getRefreshTokenModel from "./refreshToken.js";
 import getChampionshipModel from "./championship.js";
 import getMatchModel from "./match.js";
 import getBetModel from "./bet.js";
+import getLeagueMemberModel from "./leagueMember.js";
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
@@ -25,6 +26,7 @@ const models = {
   Championship: getChampionshipModel(sequelize, Sequelize),
   Match: getMatchModel(sequelize, Sequelize),
   Bet: getBetModel(sequelize, Sequelize),
+  LeagueMember: getLeagueMemberModel(sequelize, Sequelize),
 };
 
 Object.keys(models).forEach((key) => {

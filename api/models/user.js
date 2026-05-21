@@ -45,10 +45,11 @@ const getUserModel = (sequelize, { DataTypes }) => {
   };
 
   User.associate = (models) => {
-    User.hasMany(models.RefreshToken, { onDelete: "CASCADE" });
-    User.hasMany(models.Championship, { onDelete: "CASCADE" });
-    User.hasMany(models.Bet, { onDelete: "CASCADE" });
-  };
+  User.hasMany(models.RefreshToken, { onDelete: "CASCADE" });
+  User.hasMany(models.Championship, { onDelete: "CASCADE" });
+  User.hasMany(models.Bet, { onDelete: "CASCADE" });
+  User.hasMany(models.LeagueMember, { onDelete: "CASCADE" });
+};
 
   return User;
 };

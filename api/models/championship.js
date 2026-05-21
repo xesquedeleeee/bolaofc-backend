@@ -24,6 +24,7 @@ const getChampionshipModel = (sequelize, { DataTypes }) => {
   Championship.associate = (models) => {
     Championship.belongsTo(models.User, { onDelete: "CASCADE" });
     Championship.hasMany(models.Match, { onDelete: "CASCADE" });
+    Championship.hasMany(models.LeagueMember, { onDelete: "CASCADE" });
   };
 
   return Championship;

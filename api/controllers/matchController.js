@@ -1,12 +1,12 @@
-// ─── ALEXIS ───────────────────────────────────────────────────────────────────
-// Responsável: Alexis
 
 import AppError from "../errors/AppError.js";
 import * as MatchService from "../services/matchService.js";
 
 const getAll = async (req, res, next) => {
   try {
-    const matches = await MatchService.getAll(req.context.models);
+    // Se passar ?available=true retorna apenas partidas futuras das ligas do usuário
+    const userId = req.query.available === "true" ? req.userId : null;
+    const matches = await MatchService.getAll(req.context.models, userId);
     return res.json(matches);
   } catch (err) {
     next(err);
