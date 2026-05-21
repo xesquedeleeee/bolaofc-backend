@@ -1,6 +1,3 @@
-// ─── LEVI ─────────────────────────────────────────────────────────────────────
-// Responsável: Levi
-
 import AppError from "../errors/AppError.js";
 
 const calcPoints = (predictedHome, predictedAway, homeScore, awayScore) => {
@@ -32,6 +29,21 @@ export const getById = async (id, userId, models) => {
 export const create = async (data, userId, models) => {
   const match = await models.Match.findByPk(data.matchId);
   if (!match) throw new AppError("Partida não encontrada.", 404);
+
+  const existingBet = await models.Bet.findOne({
+    where: { userId, matchId: data.matchId },
+  });
+  if (existingBet) {
+    throw new AppError("Você já fez um palpite para esta partida.", 409);
+  }
+  const championship = await models.Championship.findByPk(match.championshipId);
+  if (championship && championship.userId === userId) {
+    throw new AppError(
+      "O criador da liga não pode dar palpites para manter o equilíbrio da competição.",
+      403
+    );
+  }
+
   const points = calcPoints(
     data.predictedHome,
     data.predictedAway,
