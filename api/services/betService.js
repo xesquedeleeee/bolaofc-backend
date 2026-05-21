@@ -30,8 +30,15 @@ export const create = async (data, userId, models) => {
   const match = await models.Match.findByPk(data.matchId);
   if (!match) throw new AppError("Partida não encontrada.", 404);
 
+  const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const matchDay = new Date(match.matchDate);
+    matchDay.setHours(0, 0, 0, 0);
+    if (matchDay < today) {
+      throw new AppError("O prazo para palpites nesta partida já encerrou.", 400);
+}
   const existingBet = await models.Bet.findOne({
-    where: { userId, matchId: data.matchId },
+   where: { userId, matchId: data.matchId },
   });
   if (existingBet) {
     throw new AppError("Você já fez um palpite para esta partida.", 409);
