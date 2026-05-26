@@ -30,6 +30,7 @@ app.use("/auth", routes.auth);
 app.use("/championships", routes.championship);
 app.use("/matches", routes.match);
 app.use("/bets", routes.bet);
+app.use("/users", routes.user);
 
 // ─── Rota raiz ────────────────────────────────────────────────────────────────
 app.get("/", (req, res) => {
@@ -44,7 +45,7 @@ const port = process.env.PORT ?? 3000;
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(port, () =>
-    console.log(`BolãoFC API rodando na porta ${port}! 🏆`)
+    console.log(`BolãoFC API rodando na porta ${port}! 🏆`),
   );
 });
 
